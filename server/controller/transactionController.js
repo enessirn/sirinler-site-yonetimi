@@ -18,7 +18,8 @@ const getAllAmounts = async (req, res) => {
         const totalExpense = transactions
             .filter(transaction => transaction.type === 'gider')
             .reduce((sum, transaction) => sum + transaction.amount, 0);
-        res.status(200).json({ totalIncome, totalExpense });
+            const totalAmount = totalIncome - totalExpense;
+        res.status(200).json({ totalIncome, totalExpense, totalAmount });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching amounts', error });
     }
