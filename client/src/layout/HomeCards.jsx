@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DollarOutlined, FileTextOutlined, NotificationOutlined } from '@ant-design/icons';
+import axios from "axios"
+import SlotCounter from 'react-slot-counter';
 function HomeCards() {
+  const [amount, setAmount] = useState(Number);
+  const getAmount = async () => {
+    try {
+      const getAmount = await axios.get("http://localhost:3000/api/transactions/amounts");
+      console.log(getAmount.data);
+      setAmount(getAmount.data.totalAmount);
+    } catch (error) {
+      console.error("Error fetching all transactions: ", error)
+    }
+  }
+
+  useEffect(() => {
+    getAmount()
+  }, [])
   return (
     <>
       <div className="w-full flex flex-col md:flex-row gap-4 justify-between items-stretch">
@@ -11,7 +27,11 @@ function HomeCards() {
           </div>
           <div>
             <h3 className="text-gray-600 text-sm font-medium">Bakiye</h3>
-            <p className="text-lg font-bold text-gray-900">1.250,00 ₺</p>
+            <div className="text-lg font-bold text-gray-900 flex flex-row">
+              <SlotCounter value={amount} />
+              <div className='mt-[2px] ml-2'>₺</div>
+              
+              </div>
           </div>
         </div>
 
