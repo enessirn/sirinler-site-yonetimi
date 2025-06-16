@@ -4,6 +4,7 @@ const Person = new mongoose.Schema({
     fullName: { type: String, required: true },
     aidat: { type: Boolean, default: false },
     date: { type: Date, default: null },
+    aidatId: {type: String, default: null}
 });
 
 

@@ -16,7 +16,7 @@ app.use(express.json());
 // MongoDB connection
 connectDB();
 // Routes
-app.get('/', (req, res) => {
+app.get('/api', (req, res) => {
     res.json({
         ok: true,
         message: 'Welcome to the Sirinler Site Bina Yonetimi API',
