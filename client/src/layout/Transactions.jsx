@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Modal } from 'antd'
+import { HistoryOutlined } from '@ant-design/icons';
+
 import axios from "axios"
 function Transactions() {
   const [allTransactions, setAllTransactions] = useState([]);
@@ -41,7 +43,7 @@ function Transactions() {
 
   return (
     <div className="w-full max-w-3xl mx-auto mt-8 bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-      <h2 className="text-2xl font-bold text-gray-600 tracking-tight mb-4 border-b border-gray-200">İşlem Geçmişi</h2>
+      <h2 className="text-2xl font-bold text-gray-600 tracking-tight mb-4 border-b border-gray-200"><HistoryOutlined /> İşlem Geçmişi</h2>
 
       <div className="flex flex-col divide-y divide-gray-200">
         {currentItems.map((t) => (
@@ -54,11 +56,11 @@ function Transactions() {
               {t.type === "gelir" ? "+" : "-"}{t.amount} ₺
             </div>
 
-            <div className="flex-1 mx-2 text-gray-800 font-medium truncate">
+            <div className=" w-full mx-2 text-gray-800 font-medium overflow-hidden">
               {t.title.length > 50 ? t.title.slice(0, 50) + '...' : t.title}
             </div>
 
-            <div className="text-sm text-gray-400 w-28 text-right">{
+            <div className="text-sm text-gray-400 w-24 text-right">{
               new Intl.DateTimeFormat("tr-TR", {
                 timeZone: "Europe/Istanbul",
                 month: "short",
