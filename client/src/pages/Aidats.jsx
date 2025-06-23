@@ -4,7 +4,6 @@ function Aidats() {
   const [aidats, setAidats] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // Simulate fetching data
   const getAidats = async () => {
     try {
       setLoading(true);
@@ -22,6 +21,7 @@ function Aidats() {
   }
   useEffect(() => {
     getAidats();
+    console.log("Aidat component mountedd", aidats);
   }, []);
 
   // reset aidats
@@ -40,9 +40,40 @@ function Aidats() {
     }
   }
   // reset buton
-  const handleResetClick = async() => {
+  const handleResetClick = async () => {
     if (window.confirm("Yeni ay için aidatlar sıfırlanacak. Devam etmek istiyor musunuz?")) {
       await resetAidats();
+      await getAidats();
+    }
+  };
+
+  const handleAddAidat = async (aidatId) => {
+    try {
+      const res = await axios.post(`http://localhost:3000/api/persons/add-aidat/${aidatId}`);
+      console.log(res.data);
+      if (res.data.success)
+        alert("Aidat başarıyla eklendi.");
+    } catch (error) {
+      console.error("Error processing payment:", error);
+      setError("Ödeme işlemi başarısız oldu. Lütfen tekrar deneyin.");
+    }
+    finally {
+      await getAidats();
+    }
+  };
+
+  const handleDeleteAidat = async (id, aidatId) => {
+    try {
+      const res = await axios.post(`http://localhost:3000/api/persons/delete-aidat/${id}/${aidatId}`);
+      console.log(res.data);
+      if (res.data.success)
+        alert("Aidat başarıyla silindi.");
+
+    } catch (error) {
+      console.error("Error deleting aidat:", error);
+      setError("Aidat silme işlemi başarısız oldu. Lütfen tekrar deneyin.");
+    }
+    finally {
       await getAidats();
     }
   };
@@ -62,7 +93,7 @@ function Aidats() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {aidats.map((aidat) => (
             <div
-              key={aidat.id}
+              key={aidat._id}
               className="flex justify-between items-center px-4 py-5 bg-white hover:bg-gray-50 transition cursor-pointer rounded mb-2"
             >
               <div className={`${aidat.aidat ? "text-sm w-24 text-left text-green-600 font-medium" : "text-sm w-24 text-left text-gray-400 italic"}`}>
@@ -76,11 +107,11 @@ function Aidats() {
               </div>
               <div className="text-sm w-32 text-right">
                 {aidat.aidat ? (
-                  <button className="bg-red-500 text-white px-4 py-1 rounded cursor-pointer hover:bg-red-600 transition">
+                  <button onClick={() => handleDeleteAidat(aidat?._id, aidat?.aidatId)} className="bg-red-500 text-white px-4 py-1 rounded cursor-pointer hover:bg-red-600 transition">
                     Geri Al
                   </button>
                 ) : (
-                  <button className="bg-green-500 cursor-pointer text-white px-4 py-1 rounded hover:bg-green-600 transition">
+                  <button className="bg-green-500 cursor-pointer text-white px-4 py-1 rounded hover:bg-green-600 transition" onClick={() => handleAddAidat(aidat._id)}>
                     Öde
                   </button>
                 )}

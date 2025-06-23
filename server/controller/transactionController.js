@@ -20,12 +20,23 @@ const getAllAmounts = async (req, res) => {
             .reduce((sum, transaction) => sum + transaction.amount, 0);
         const totalAmount = totalIncome - totalExpense;
 
-        res.status(200).json({ totalIncome, totalExpense, totalAmount});
+        res.status(200).json({ totalIncome, totalExpense, totalAmount });
     } catch (error) {
         res.status(500).json({ message: 'Error fetching amounts', error });
     }
 }
 
+const deleteAllTransaction = async (req, res) => {
+    try {
+        const deletedTransactions = await Transaction.deleteMany({});
+        if (deletedTransactions.deletedCount === 0) {
+            return res.status(404).json({ message: 'No transactions found to delete' });
+        }
+        res.status(200).json({ message: 'All transactions deleted successfully', deletedCount: deletedTransactions.deletedCount });
+    } catch (error) {
+        res.status(500).json({ message: 'Error deleting amounts', error });
+    }
+}
 const addTransaction = async (req, res) => {
     try {
         const newTransaction = new Transaction(req.body);
@@ -49,4 +60,4 @@ const deleteTransaction = async (req, res) => {
     }
 }
 
-module.exports = { getAllTransactions, addTransaction, deleteTransaction, getAllAmounts };
+module.exports = { getAllTransactions, addTransaction, deleteTransaction, getAllAmounts, deleteAllTransaction };

@@ -8,5 +8,5 @@ router.post('/add', addPerson);
 router.delete('/delete/:id', deletePerson);
 router.post('/add-aidat/:id', addAidat)
 
-router.post("/delete-aidat/:id", deleteAidat)
+router.post("/delete-aidat/:id/:aidatId", deleteAidat)
 module.exports = router;

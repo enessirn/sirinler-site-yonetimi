@@ -78,6 +78,8 @@ const addAidat = async (req, res) => {
 const deleteAidat = async (req, res) => {
   try {
     const { id, aidatId } = req.params;
+    console.log("id", id, "aidatId", aidatId);
+    if (!aidatId) return res.status(500).json({ message: "Aidat Id bulunamadı" })
     if (!id) return res.status(500).json({ message: "Kişi Bulunamadı" })
     const personAidat = await Person.findByIdAndUpdate(
       id,
@@ -90,11 +92,12 @@ const deleteAidat = async (req, res) => {
       },
       { new: true }
     );
-    await personAidat.save();
+
 
 
     // transactions delete fo the aidat 
-    const findTransaction = await Transaction.findOne(aidatId);
+    const findTransaction = await Transaction.findOne({aidatId: aidatId});
+    console.log("findTransaction", findTransaction);
     if (!findTransaction) return res.status(404).json({ message: "Aidat Id bulunamadı" })
     await Transaction.findByIdAndDelete(findTransaction._id);
     res.status(200).json({
