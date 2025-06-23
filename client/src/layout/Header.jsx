@@ -1,4 +1,4 @@
-
+import Login from "../components/Login"
 function Header() {
     return (
 
@@ -6,9 +6,7 @@ function Header() {
             <h1 className="text-xl lg:text-2xl font-bold text-gray-800 tracking-tight">
                 Şirinler Sitesi
             </h1>
-            <button className="text-sm lg:text-base bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-xl shadow transition-all duration-200 cursor-pointer">
-                Yönetici Girişi
-            </button>
+            <Login />
         </header>
     )
 }

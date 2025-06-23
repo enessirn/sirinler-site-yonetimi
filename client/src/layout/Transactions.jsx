@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Modal } from 'antd'
-import { HistoryOutlined } from '@ant-design/icons';
+import { HistoryOutlined, InboxOutlined } from '@ant-design/icons';
 
 import axios from "axios"
 function Transactions() {
@@ -45,30 +45,38 @@ function Transactions() {
     <div className="w-full max-w-3xl mx-auto mt-8 bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
       <h2 className="text-2xl font-bold text-gray-600 tracking-tight mb-4 border-b border-gray-200"><HistoryOutlined /> İşlem Geçmişi</h2>
 
-      <div className="flex flex-col divide-y divide-gray-200">
-        {currentItems.map((t) => (
-          <div
-            key={t._id}
-            onClick={() => showModal(t)}
-            className="flex justify-between items-center px-4 py-5 bg-white hover:bg-gray-50 transition cursor-pointer"
-          >
-            <div className={`text-base font-semibold w-24 ${t.type === "gelir" ? "text-green-500" : "text-red-500"}`}>
-              {t.type === "gelir" ? "+" : "-"}{t.amount} ₺
-            </div>
+<div className="flex flex-col divide-y divide-gray-200">
+  {currentItems.length === 0 ? (
+    <div className="flex flex-col items-center justify-center py-12 text-gray-400">
+      <InboxOutlined style={{ fontSize: "48px" }} />
+      <p className="mt-4 text-sm">Gösterilecek işlem bulunamadı.</p>
+    </div>
+  ) : (
+    currentItems.map((t) => (
+      <div
+        key={t._id}
+        onClick={() => showModal(t)}
+        className="flex justify-between items-center px-4 py-5 bg-white hover:bg-gray-50 transition cursor-pointer"
+      >
+        <div className={`text-base font-semibold w-24 ${t.type === "gelir" ? "text-green-500" : "text-red-500"}`}>
+          {t.type === "gelir" ? "+" : "-"}{t.amount} ₺
+        </div>
 
-            <div className=" w-full mx-2 text-gray-800 font-medium overflow-hidden">
-              {t.title.length > 50 ? t.title.slice(0, 50) + '...' : t.title}
-            </div>
+        <div className="w-full mx-2 text-gray-800 font-medium overflow-hidden">
+          {t.title.length > 50 ? t.title.slice(0, 50) + '...' : t.title}
+        </div>
 
-            <div className="text-sm text-gray-400 w-24 text-right">{
-              new Intl.DateTimeFormat("tr-TR", {
-                timeZone: "Europe/Istanbul",
-                month: "short",
-                day: "numeric",
-              }).format(new Date(t.date))}</div>
-          </div>
-        ))}
+        <div className="text-sm text-gray-400 w-24 text-right">
+          {new Intl.DateTimeFormat("tr-TR", {
+            timeZone: "Europe/Istanbul",
+            month: "short",
+            day: "numeric",
+          }).format(new Date(t.date))}
+        </div>
       </div>
+    ))
+  )}
+</div>
 
       {/* modal */}
 
@@ -121,7 +129,7 @@ function Transactions() {
         }
       </Modal>
       {/* sayfalar gecisi */}
-      <div className="flex justify-center items-center mt-6 gap-2">
+      <div className={`flex justify-center items-center mt-6 gap-2 ${currentItems.length === 0 ? "hidden" : ""}`}>
         <button
           onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
           className="px-3 py-1 text-sm bg-gray-200 hover:bg-gray-300 rounded cursor-pointer "
