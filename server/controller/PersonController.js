@@ -54,17 +54,15 @@ const addAidat = async (req, res) => {
     // update transaction
     const months = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
 
-    const getPerson = await Person.findById(personId);
-    if (!getPerson) return res.status(500).json({ message: "Kişi bulunamadı" })
+    if (!personAidat) return res.status(404).json({ message: "Kişi bulunamadı" })
     const newTransaction = new Transaction({
       "title": "Aidat Ödemesi",
-      "desc": `${getPerson.fullName} ${months[date.getMonth()]} Ayı Aidat Ödemesi`,
+      "desc": `${personAidat.fullName} ${months[date.getMonth()]} Ayı Aidat Ödemesi`,
       "amount": 200,
       "date": new Date(),
-      "type": "gelir",
+      "type": true,
       "aidatId": newId
     })
-    await personAidat.save();
     await newTransaction.save();
     res.status(201).json({
       message: "Aidat güncellendi",

@@ -33,6 +33,9 @@ const deleteAllTransaction = async (req, res) => {
             return res.status(404).json({ message: 'No transactions found to delete' });
         }
         res.status(200).json({ message: 'All transactions deleted successfully', deletedCount: deletedTransactions.deletedCount });
+
+
+        
     } catch (error) {
         res.status(500).json({ message: 'Error deleting amounts', error });
     }
