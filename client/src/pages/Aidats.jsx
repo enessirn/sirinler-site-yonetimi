@@ -111,7 +111,7 @@ function Aidats() {
                     Geri Al
                   </button>
                 ) : (
-                  <button className="bg-green-500 cursor-pointer text-white px-4 py-1 rounded hover:bg-green-600 transition" onClick={() => handleAddAidat(aidat._id)}>
+                  <button className="bg-green-500 cursor-pointer text-white px-4 py-1 rounded hover:bg-green-600 transition" onClick={() => handleAddAidat(aidat?._id)}>
                     Öde
                   </button>
                 )}

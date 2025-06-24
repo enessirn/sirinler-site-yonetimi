@@ -48,11 +48,29 @@ function AddTransaction() {
             });
         }
     }
+    const handleDeleteAll = async () => {
+        try {
+            if (!window.confirm("Tüm işlemleri silmek istediğinize emin misiniz? Bu işlem geri alınamaz."))
+                return;
+            const transaction = await axios.delete("http://localhost:3000/api/transactions/delete-all-transaction");
+            const aidat = await axios.get("http://localhost:3000/api/persons/reset-all-aidats");
+            if (transaction.status === 200 && aidat.status === 200) {
+                alert("Tüm işlemler başarıyla silindi.");
+                getAllTransactions();
+            } else {
+                alert("Tüm işlemler silinirken bir hata oluştu. Lütfen tekrar deneyin.");
+            }
+        } catch (error) {
 
+            console.error("Error deleting all transactions:", error);
+            alert("Tüm işlemler silinirken bir hata oluştu. Lütfen tekrar deneyin.");
+        }
+    }
     return (
         <div className="w-full min-h-screen bg-gray-50 px-4 py-4 pb-20 md:pb-4">
-            <div className="w-full mb-6 border-b border-gray-200 pb-4">
+            <div className="w-full flex flex-row justify-between items-center mb-6 border-b border-gray-200 pb-4">
                 <h1 className="font-bold text-3xl">İşlem Ekle</h1>
+                <button className='py-2 rounded border-none outline-none px-2 bg-red-300 text-red-600 font-bold cursor-pointer hover:bg-red-400 hover:text-red-700' onClick={handleDeleteAll}>Tüm işlemleri kalıcı olarak sil</button>
             </div>
 
             <div id='switch' className='w-full flex flex-row gap-4 justify-center items-center mb-4'>
