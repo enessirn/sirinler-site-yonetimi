@@ -7,7 +7,7 @@ function Cards() {
 
     const cardData = [
         { title: 'Aidat', href: "aidats", icon: <HomeOutlined style={{ fontSize: '24px' }} />, color: '#1677ff'},
-        { title: 'İşlemler', href: "transaction", icon: <FileTextOutlined style={{ fontSize: '24px' }} />, color: '#52c41a' },
+        { title: 'İşlemler', href: "add-transaction", icon: <FileTextOutlined style={{ fontSize: '24px' }} />, color: '#52c41a' },
         { title: 'Kişiler', href: "contacts", icon: <TeamOutlined style={{ fontSize: '24px' }} />, color: '#9254de' },
         { title: 'Duyurular', href: "events", icon: <NotificationOutlined style={{ fontSize: '24px' }} />, color: '#fa8c16' },
     ];

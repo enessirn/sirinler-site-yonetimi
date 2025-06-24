@@ -79,7 +79,7 @@ function Aidats() {
   };
   return (
     <div className="w-full min-h-screen bg-gray-50 px-4 py-4 pb-20 md:pb-4">
-      <div className="w-full flex flex-row justify-between items-center mb-6">
+      <div className="w-full flex flex-row justify-between items-center mb-6 border-b border-gray-200 pb-4">
         <h1 className="font-bold text-3xl">Aidat</h1>
         <button onClick={handleResetClick} className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition cursor-pointer">
           Aidatları Sıfırla
