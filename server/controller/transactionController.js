@@ -13,10 +13,10 @@ const getAllAmounts = async (req, res) => {
     try {
         const transactions = await Transaction.find();
         const totalIncome = transactions
-            .filter(transaction => transaction.type === 'gelir')
+            .filter(transaction => transaction.type === true)
             .reduce((sum, transaction) => sum + transaction.amount, 0);
         const totalExpense = transactions
-            .filter(transaction => transaction.type === 'gider')
+            .filter(transaction => transaction.type === false)
             .reduce((sum, transaction) => sum + transaction.amount, 0);
         const totalAmount = totalIncome - totalExpense;
 
